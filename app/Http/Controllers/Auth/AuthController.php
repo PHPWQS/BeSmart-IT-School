@@ -10,7 +10,6 @@ use App\Http\Traits\AuthTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function Ramsey\Uuid\v1;
 
 class AuthController extends Controller
 {
@@ -52,15 +51,16 @@ class AuthController extends Controller
 
         if (Auth::attempt($data, $rember)) {
             $request->session()->regenerate();
-            return redirect()->route('index');
+            return redirect()->intended('');
         }
-        return back()->withErrors(["email" => 'Credintals not correct.'], "email");
+        return back()->withErrors(["email" => 'Credintals not correct.'])->onlyInput("email");
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect()->route('auth.index');
     }
