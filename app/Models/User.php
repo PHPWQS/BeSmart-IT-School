@@ -18,7 +18,7 @@ class User extends Authenticatable implements FilamentUser
 
     protected $fillable = [
         'email', 'password', 'name',
-        'subscribed'
+        'subscribed', 'role'
     ];
 
     protected $hidden = [

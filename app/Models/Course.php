@@ -15,11 +15,12 @@ class Course extends Model
 
     protected $fillable = [
         'name', 'description', 'thumbnail',
-        'user_id'
+        'user_id', 'type_id'
     ];
 
     protected $casts = [
         'user_id' => 'integer',
+        'type_id' => 'integer',
     ];
 
     protected static function booted(): void
@@ -32,6 +33,11 @@ class Course extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function type(): BelongsTo
+    {
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     public function lessons(): HasMany
